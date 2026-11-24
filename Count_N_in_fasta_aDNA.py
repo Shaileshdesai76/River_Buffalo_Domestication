@@ -6,20 +6,24 @@ def count_N_IN_fasta(fasta_file):
   with open(fasta_file) as f:
     N_details = {}
     current_header = None
-  
+
     for line in f:
       line = line.strip()
       if not line:
         continue
-      
+
       if line.startswith(">"):
         current_header = line.split()[0]
         N_details[current_header] = 0
       elif current_header is not None:
         N_details[current_header] += line.upper().count("N")
 
+    with open("count_N_IN_fasta.txt", "w") as r:
+      for key, values in N_details.items():
+        r.write(f"{key}: contain {values} Ns\n")
+
     for key, values in N_details.items():
       print(f"{key}: contain {values} Ns")
 
 
-count_N_IN_fasta("Final_dataset_aligned_2.fas")
+count_N_IN_fasta("all_fasta_GL.fasta")  ## all file name 
